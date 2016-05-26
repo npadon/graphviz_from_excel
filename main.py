@@ -35,16 +35,26 @@ for row in ws.rows:
             
 #make a left-right directed graph (affects 'dot' layout only)
 G=pgv.AGraph(rankdir='LR')
+#G.graph_attr['fontpath'] = 'C:\\windows\\fonts'
+
 
 #populate the nodes and edges
 for x,y in zip(parents,children):
     #print("%s -> %s" % (x,y))
     G.add_edge(x,y)
 
+#set default size and font for all nodes
+for x in G:
+    x.attr['fontname']='Arial bold'
+    x.attr['fontsize']=16
+    x.attr['color']='#ffffff'
+    x.attr['style']='filled'
+    x.attr['fillcolor']='#c4c4c4'
+
 #change the shapes for selected nodes
 change_attributes(G,parents,parent_shape,'shape')
 change_attributes(G,children,child_shape,'shape')
-
+G.write('graph.dot')
 
 layout_programs = ['dot','neato','fdp']
 for p in layout_programs:
